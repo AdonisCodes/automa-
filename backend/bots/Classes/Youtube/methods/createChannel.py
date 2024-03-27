@@ -6,7 +6,8 @@ import time
 
 def createChannel():
     signIntoYoutubeUrl = "https://youtube.com"
-    email = "willfv2@gmail.com"
+    email = "adonisdevelops@gmail.com"
+    password = "Adonis2024"
     
     # Set up undetected_chromedriver
     options = uc.ChromeOptions()
@@ -17,44 +18,27 @@ def createChannel():
     
     # Wait for the page to load
     time.sleep(1.2)
-    driver.save_screenshot("1_page_load.png")
     
     # Click on the "Sign in" button
     driver.find_element(By.LINK_TEXT, "Sign in").click()
     time.sleep(0.5)  # Adjust sleep duration based on page load time
-    driver.save_screenshot("2_sign_in_clicked.png")
     
     # Simulate typing the email address
-    email_input = driver.find_element(By.NAME, "identifier")
-    for char in email:
-        email_input.send_keys(char)
-        time.sleep(random.uniform(0.1, 0.35))
-    driver.save_screenshot("3_email_typed.png")
-    time.sleep(550000)
+    emailInput = driver.find_element(By.NAME, "identifier")
+    emailInput.send_keys(email)
     
     # Press Enter to submit the email
-    email_input.send_keys(Keys.ENTER)
-    time.sleep(0.5)  # Adjust sleep duration based on page load time
-    # Click the element with the specified text using XPath
-    text_to_click = "Try again"
-    while driver.find_element(by="xpath", value=f"//*[text()='{text_to_click}']"):
-        element = driver.find_element(by="xpath", value=f"//*[text()='{text_to_click}']")
-        element.click()
+    emailInput.send_keys(Keys.ENTER)
+    time.sleep(5)
+    # Find the password input with type="password"
+    passwordInput = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[2]/div/div/div/form/span/section[2]/div/div/div[1]/div[1]/div/div/div/div/div[1]/div/div[1]/input")
+    passwordInput.send_keys(password)
+    passwordInput.send_keys(Keys.ENTER)
     
-    # Simulate typing the email address again (if necessary)
-    for char in email:
-        driver.send_keys(char)
-        time.sleep(random.uniform(0.1, 0.35))
-    driver.save_screenshot("5_email_typed_again.png")
     
     # Click on the "Next" button
-    nextButton = driver.find_element(by="xpath", value=f"//*[text()='Next']")
-    nextButton.click()
-    time.sleep(0.5)  # Adjust sleep duration based on page load time
-    driver.save_screenshot("6_next_button_clicked.png")
-    
     print("Done.")
     driver.quit()
-    time.sleep(5)
+
 
 createChannel()
