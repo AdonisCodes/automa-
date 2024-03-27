@@ -2,13 +2,23 @@ import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import random
+import json
 import time
+from dotenv import load_dotenv
+import os
+
+# Specify the path to the .env file
+dotenv_path = '../../../../../.env'
+
+# Load environment variables from the specified .env file
+load_dotenv(dotenv_path)
 
 def createChannel():
     signIntoYoutubeUrl = "https://youtube.com"
-    email = "adonisdevelops@gmail.com"
-    password = "Adonis2024"
-    
+    email = os.getenv("TEST_EMAIL")
+    password = os.getenv("TEST_PASSWORD")
+    print(email)    
+    print(password)
     # Set up undetected_chromedriver
     options = uc.ChromeOptions()
     # options.add_argument("--headless")
@@ -16,8 +26,7 @@ def createChannel():
     
     driver.get(signIntoYoutubeUrl)
     
-    # Wait for the page to load
-    time.sleep(1.2)
+    # Wait for the page to load time.sleep(1.2)
     
     # Click on the "Sign in" button
     driver.find_element(By.LINK_TEXT, "Sign in").click()
@@ -35,9 +44,33 @@ def createChannel():
     passwordInput.send_keys(password)
     passwordInput.send_keys(Keys.ENTER)
     
-    
-    # Click on the "Next" button
-    print("Done.")
+    time.sleep(15)    
+    # Once signed in, get cookies
+    cookies = driver.get_cookies()
+    driver.quit()
+    # Print cookies
+    print(cookies)
+
+    # Replace single quotes with double quotes
+
+    cookies_str = str(cookies).replace("'", '"').replace("True", "true").replace("False", "false")
+
+    # Ensure proper formatting
+    # cookies_str = cookies_str.replace(", {", "}, {")
+
+    # Load the JSON
+    cookies = json.loads(cookies_str)
+    time.sleep(5)
+
+    options = uc.ChromeOptions()
+    driver = uc.Chrome(options=options)
+    driver.get(signIntoYoutubeUrl)
+
+    for cookie in cookies:
+        driver.add_cookie(cookie)
+
+    driver.refresh()
+    # Close the browser when done
     driver.quit()
 
 
