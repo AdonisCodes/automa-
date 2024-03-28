@@ -1,1 +1,1 @@
-from createChannel import createChannel
+from Classes.Youtube.methods.createChannel import createChannel

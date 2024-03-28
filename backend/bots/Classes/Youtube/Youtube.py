@@ -1,6 +1,6 @@
-import methods
+from multiprocessing import Array
 from typing import Optional
-
+import Classes.Youtube.methods as methods
 
 class Youtube:
     def __init__(
@@ -20,15 +20,26 @@ class Youtube:
 
     def createChannel(
         self,
-        channelName: str,
-        email: str,
+        thumbnailPath: str, 
+        bannerPath: str, 
+        videoWatermarkImagePath: str, 
+        channelDescription: str, 
+        contactEmailAddress: str, 
+        links: list, 
+        email: str, 
         password: str,
-        channelUsername: Optional[str],
-        profilePicture=None,
-        channelBio=None,
-        channelLinks=None,
+        channelHandle: str,
+        channelName: str,
     ):
-        # TODO: Create a new channel.
         methods.createChannel(
-            channelName, email, password, channelUsername, profilePicture, channelBio
+            thumbnailPath,
+            bannerPath,
+            videoWatermarkImagePath,
+            channelDescription,
+            contactEmailAddress,
+            links,
+            email,
+            password,
+            channelHandle,
+            channelName,
         )
